@@ -1,12 +1,10 @@
-import { render } from "@testing-library/react"
+import { queryByText, render, waitFor, screen} from "@testing-library/react"
 import userEvent from '@testing-library/user-event'
 import App from "./App"
 
 function setup(jsx:React.ReactNode ) {
     return {
       user: userEvent.setup(),
-      // Import `render` from the framework library of your choice.
-      // See https://testing-library.com/docs/dom-testing-library/install#wrappers
       ...render(jsx),
     }
   }
@@ -32,5 +30,17 @@ describe('<App/>', () => {
 
         expect(getByText('Python')).toBeInTheDocument()
        
+    })
+
+    it('should remove item from list', async () => {
+      const {user, getAllByText} = setup(<App/>)
+
+      const removeButtons = getAllByText('Remover')
+
+      user.click(removeButtons[0])
+
+      await waitFor(() => {
+        expect(screen.queryByText('Java')).not.toBeInTheDocument()
+      })
     })
 })
