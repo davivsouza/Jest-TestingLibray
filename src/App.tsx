@@ -11,6 +11,7 @@ function App() {
   return (
     <>
      <button onClick={addToList}>Add to list</button>
+     <input placeholder="Novo item" type="text" />
      <ul>
       {list.map(item => (
         <li key={item}>{item}</li>

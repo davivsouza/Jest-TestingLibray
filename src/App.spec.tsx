@@ -22,10 +22,12 @@ describe('<App/>', () => {
 
     })
 
-    it('should add item in the list when click button', async () => {
-        const {getByText, user} = setup(<App/>)
+    it('should add item in the list', async () => {
+        const {getByText,getByPlaceholderText, user} = setup(<App/>)
         const addButton = getByText('Add to list')
+        const inputElement = getByPlaceholderText('Novo item');
 
+        await user.type(inputElement, 'Python')
         await user.click(addButton)
 
         expect(getByText('Python')).toBeInTheDocument()
